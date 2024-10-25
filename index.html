@@ -8,37 +8,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculator">
-        <div class="display">
+    <div class="calc">
+        <div class="calc__display">
             <input type="text" id="result" disabled />
         </div>
-        <div class="buttons">
-            <!-- Row 1 -->
-            <button class="btn">7</button>
-            <button class="btn">8</button>
-            <button class="btn">9</button>
-            <button class="btn">/</button>
+        <div class="calc__buttons">
+            <button class="calc__button calc__button--clear">AC</button>
+            <button class="calc__button calc__button--toggle-sign">+/-</button>
+            <button class="calc__button calc__button--operator">%</button>
+            <button class="calc__button calc__button--operator">/</button>
+
+            <button class="calc__button">7</button>
+            <button class="calc__button">8</button>
+            <button class="calc__button">9</button>
+            <button class="calc__button calc__button--operator">*</button>
         
-            <!-- Row 2 -->
-            <button class="btn">4</button>
-            <button class="btn">5</button>
-            <button class="btn">6</button>
-            <button class="btn">*</button>
+            <button class="calc__button">4</button>
+            <button class="calc__button">5</button>
+            <button class="calc__button">6</button>
+            <button class="calc__button calc__button--operator">-</button>
         
-            <!-- Row 3 -->
-            <button class="btn">1</button>
-            <button class="btn">2</button>
-            <button class="btn">3</button>
-            <button class="btn">-</button>
-        
-            <!-- Row 4 -->
-            <button class="btn">0</button>
-            <button class="btn">.</button>
-            <button class="btn">=</button>
-            <button class="btn">+</button>
-        
-            <!-- Clear button -->
-            <button class="btn clear">C</button>
+            <button class="calc__button">1</button>
+            <button class="calc__button">2</button>
+            <button class="calc__button">3</button>
+            <button class="calc__button calc__button--operator">+</button>
+    
+            <button class="calc__button calc__button--zero">0</button>
+            <button class="calc__button calc__button--backspace">DEL</button>
+            <button class="calc__button calc__button--decimal">.</button>
+            <button class="calc__button calc__button--equals">=</button>
         </div>
     </div>
 </body>

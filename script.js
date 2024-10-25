@@ -1,46 +1,39 @@
-function add(a,b) {
-    const first = a;
-    const second = b;
-    const operator = '+';
-    let result = first + second;
-    return result;
-}
-
-function subtract(a,b) {
-    const first = a;
-    const second = b;
-    const operator = '-';
-    let result = first - second;
-    return result;
-}
-
-function multiply(a,b) {
-    const first = a;
-    const second = b;
-    const operator = '*';
-    let result = first * second;
-    return result;
-}
-
-function divide(a,b) {
-    const first = a;
-    const second = b;
-    const operator = '/';
-    let result = first / second;
-    return result;
-}
+// A. Core calculation logic
+const operations = {
+    '+': (a, b) => a + b,
+    '-': (a, b) => a - b,
+    '*': (a, b) => a * b,
+    '/': (a, b) => {
+        if (b === 0) throw new Error('Cant divide by zero');
+        return a / b;
+        }
+};
 
 function operate(first, second, operator) {
-    switch (operator) {
-        case '+':
-            return add(first, second);
-        case '-':
-            return subtract(first, second);
-        case '*':
-            return multiply(first, second);
-        case '/':
-            return divide(first, second);
-        default:
-            throw new Error('Invalid operator');
-    }
+    const operation = operations[operator];
+    if (!operation) throw new Error('Invalid operator');
+    return operation(first, second);
 }
+
+// B. User input logic
+let firstOperand = '';
+let secondOperand = '';
+let currentOperator = null;
+let displayValue = '';
+let waitingForSecondOperand = false;
+
+const display = document.querySelector('.calc__display-input');
+const buttons = document.querySelectorAll('.calc__buttons');
+
+
+function updateDisplay() {
+
+}
+function handleButtonClick(event) {
+    const buttonValue = event.target.innerText;
+}
+
+
+buttons.forEach(button => {
+    button.addEventListener('click', handleButtonClick);
+})
