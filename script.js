@@ -25,15 +25,23 @@ let waitingForSecondOperand = false;
 const display = document.querySelector('.calc__display-input');
 const buttons = document.querySelectorAll('.calc__buttons');
 
-
-function updateDisplay() {
-
-}
 function handleButtonClick(event) {
     const buttonValue = event.target.innerText;
-}
+    
+    if (!isNaN(buttonValue)) {
+        handleNumberInput(buttonValue);
+    } else if (buttonValue in operations) {
+        handleOperatorInput(buttonValue);
+    } else if (buttonValue === "=") {
+        handleEquals();
+    } else if (buttonValue === "AC") {
+        resetCalculator();
+    } else if (buttonValue === "DEL") {
+        deleteLastInput();
+    }
+};
 
 
 buttons.forEach(button => {
     button.addEventListener('click', handleButtonClick);
-})
+});
