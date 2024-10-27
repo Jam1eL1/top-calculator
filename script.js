@@ -68,11 +68,32 @@ function handleOperatorInput(operator) {
     waitingForSecondOperand = true;
 }
 
+function resetCalculator() {
+    firstOperand = '';
+    secondOperand = '';
+    currentOperator = null;
+    displayValue = '';
+    waitingForSecondOperand = false;
+    updateDisplay(displayValue);
+}
+
+function deleteLastInput() {
+    if (waitingForSecondOperand) {
+        secondOperand = secondOperand.slice(0,-1);
+        updateDisplay(secondOperand);
+    } else {
+        if (firstOperand && !currentOperator) {
+            firstOperand = firstOperand.slice(0,-1);
+            updateDisplay(firstOperand);
+        } else {
+            // when operator is entered but it is not shown on display
+            currentOperator = null;
+        }
+    }
+}
+
 function handleButtonClick(event) {
     const buttonValue = event.target.innerText;
-    // displayValue += buttonValue;
-    // updateDisplay(displayValue);
-    
     if (!isNaN(buttonValue)) {
         handleNumberInput(buttonValue);
     } else if (buttonValue in operations) {
