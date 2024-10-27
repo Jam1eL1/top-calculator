@@ -4,7 +4,10 @@ const operations = {
     '-': (a, b) => a - b,
     '*': (a, b) => a * b,
     '/': (a, b) => {
-        if (b === 0) throw new Error('Cant divide by zero');
+        if (b === 0) {
+            updateDisplay('infinity');
+            throw new Error('Cant divide by zero');
+        };
         return a / b;
         }
 };
@@ -23,10 +26,55 @@ let displayValue = '';
 let waitingForSecondOperand = false;
 
 const display = document.querySelector('.calc__display-input');
-const buttons = document.querySelectorAll('.calc__buttons');
+const buttons = document.querySelectorAll('.calc__button');
+
+function updateDisplay(value) {
+    display.value = value;
+}
+
+function handleNumberInput(number) {
+    if (waitingForSecondOperand) {
+        secondOperand = number;
+        waitingForSecondOperand = false;
+    } else {
+        if (currentOperator === null) {
+            firstOperand += number;
+        } else {
+            secondOperand += number;
+        }
+    }
+}
+
+function handleEquals() {
+    const num1 = parseFloat(firstOperand);
+    const num2 = parseFloat(secondOperand);
+
+    if (!isNaN(num1) && !isNaN(num2)) {
+        const result = operate(num1, num2, currentOperator);
+        displayValue = result.toString();
+        updateDisplay(displayValue);
+
+        firstOperand = result.toString();
+        secondOperand = '';
+        currentOperator = null;
+        waitingForSecondOperand = false;
+    } else {
+        console.log('Both operands are required for calculation.');
+    }
+}
+
+function handleOperatorInput(operator) {
+    if (firstOperand && secondOperand && currentOperator) {
+        handleEquals(); 
+    }
+    currentOperator = operator;
+    waitingForSecondOperand = true;
+}
 
 function handleButtonClick(event) {
     const buttonValue = event.target.innerText;
+    displayValue += buttonValue;
+    updateDisplay(displayValue);
     
     if (!isNaN(buttonValue)) {
         handleNumberInput(buttonValue);
