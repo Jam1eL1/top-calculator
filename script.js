@@ -34,15 +34,12 @@ function updateDisplay(value) {
 
 function handleNumberInput(number) {
     if (waitingForSecondOperand) {
-        secondOperand = number;
-        waitingForSecondOperand = false;
+        secondOperand += number;
     } else {
-        if (currentOperator === null) {
-            firstOperand += number;
-        } else {
-            secondOperand += number;
-        }
+        firstOperand += number;
     }
+    const displayContent = waitingForSecondOperand ? secondOperand : firstOperand;
+    updateDisplay(displayContent);
 }
 
 function handleEquals() {
@@ -73,8 +70,8 @@ function handleOperatorInput(operator) {
 
 function handleButtonClick(event) {
     const buttonValue = event.target.innerText;
-    displayValue += buttonValue;
-    updateDisplay(displayValue);
+    // displayValue += buttonValue;
+    // updateDisplay(displayValue);
     
     if (!isNaN(buttonValue)) {
         handleNumberInput(buttonValue);
