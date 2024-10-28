@@ -24,6 +24,8 @@ let secondOperand = '';
 let currentOperator = null;
 let displayValue = '';
 let waitingForSecondOperand = false;
+let decimalInFirst = false;
+let decimalInSecond = false;
 
 const display = document.querySelector('.calc__display-input');
 const buttons = document.querySelectorAll('.calc__button');
@@ -55,6 +57,9 @@ function handleEquals() {
         secondOperand = '';
         currentOperator = null;
         waitingForSecondOperand = false;
+
+        decimalInFirst = false;
+        decimalInSecond = false;
     } else {
         console.log('Both operands are required for calculation.');
     }
@@ -74,21 +79,40 @@ function resetCalculator() {
     currentOperator = null;
     displayValue = '';
     waitingForSecondOperand = false;
+    decimalInFirst = false;
+    decimalInSecond = false;
     updateDisplay(displayValue);
 }
 
 function deleteLastInput() {
     if (waitingForSecondOperand) {
+        if (secondOperand.endsWith('.')) {
+            decimalInSecond = false;
+        }
         secondOperand = secondOperand.slice(0,-1);
         updateDisplay(secondOperand);
     } else {
         if (firstOperand && !currentOperator) {
+            if (firstOperand.endsWith('.')) {
+                decimalInFirst = false;
+            }
             firstOperand = firstOperand.slice(0,-1);
             updateDisplay(firstOperand);
         } else {
-            // when operator is entered but it is not shown on display
             currentOperator = null;
         }
+    }
+}
+
+function insertDecimal() {
+    if (waitingForSecondOperand && !decimalInSecond) {
+        secondOperand += '.';
+        decimalInSecond = true;
+        updateDisplay(secondOperand);
+    } else if ( !waitingForSecondOperand && !decimalInFirst){
+        firstOperand += '.';
+        decimalInFirst = true;
+        updateDisplay(firstOperand);
     }
 }
 
@@ -104,8 +128,10 @@ function handleButtonClick(event) {
         resetCalculator();
     } else if (buttonValue === "DEL") {
         deleteLastInput();
+    } else if (buttonValue === '.') {
+        insertDecimal();
     }
-};
+}
 
 
 buttons.forEach(button => {
