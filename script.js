@@ -116,6 +116,34 @@ function insertDecimal() {
     }
 }
 
+function toggleSign() {
+    if (waitingForSecondOperand) {
+        if (!secondOperand) {
+            displayValue = '-0';
+            secondOperand += '-';
+        } else {
+            secondOperand = getToggledSign(secondOperand);
+        }
+        updateDisplay(secondOperand);
+
+    } else if (firstOperand) {
+        firstOperand = getToggledSign(firstOperand);
+        updateDisplay(firstOperand);
+    } else {
+        displayValue = '-0';
+        updateDisplay(displayValue);
+        firstOperand += '-';
+    }
+}
+
+function getToggledSign(operand) {
+    if (!operand.startsWith('-')) {
+        return '-' + operand;
+    } else {
+        return operand.slice(1);
+    }
+}
+
 function handleButtonClick(event) {
     const buttonValue = event.target.innerText;
     if (!isNaN(buttonValue)) {
@@ -130,6 +158,8 @@ function handleButtonClick(event) {
         deleteLastInput();
     } else if (buttonValue === '.') {
         insertDecimal();
+    } else if (buttonValue === "+/-") {
+        toggleSign();
     }
 }
 
